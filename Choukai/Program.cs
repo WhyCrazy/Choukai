@@ -1,7 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,8 +13,10 @@ namespace Choukai
               => new Program().MainAsync().GetAwaiter().GetResult();
 
         public readonly DiscordSocketClient client;
-        private readonly IServiceCollection map = new ServiceCollection();
         private readonly CommandService commands = new CommandService();
+
+        private ITextChannel submitChannel;
+        private Db db;
 
         private Program()
         {
@@ -25,11 +26,19 @@ namespace Choukai
             });
             client.Log += Log;
             commands.Log += LogError;
+
+            submitChannel = (ITextChannel)client.GetChannel(ulong.Parse(File.ReadAllLines("Keys/channels.txt")[0]));
+            db = new Db();
         }
 
         private async Task MainAsync()
         {
+            await db.InitAsync();
+
             client.MessageReceived += HandleCommandAsync;
+
+            await commands.AddModuleAsync<Modules.GameJam>();
+            await commands.AddModuleAsync<Modules.Communication>();
 
             await client.LoginAsync(TokenType.Bot, File.ReadAllText("Keys/token.txt"));
             await client.StartAsync();

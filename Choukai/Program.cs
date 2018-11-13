@@ -15,7 +15,7 @@ namespace Choukai
         public readonly DiscordSocketClient client;
         private readonly CommandService commands = new CommandService();
 
-        private ITextChannel submitChannel;
+        private ulong submitChannel;
         private Db db;
 
         public DateTime StartTime { private set; get; }
@@ -32,7 +32,7 @@ namespace Choukai
             client.Log += Log;
             commands.Log += LogError;
 
-            submitChannel = (ITextChannel)client.GetChannel(ulong.Parse(File.ReadAllLines("Keys/channels.txt")[0]));
+            submitChannel = ulong.Parse(File.ReadAllLines("Keys/channels.txt")[0]);
             db = new Db();
         }
 

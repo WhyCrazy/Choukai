@@ -1,0 +1,3 @@
+[submodule "Choukai/Discord-Utils"]
+	path = Choukai/Discord-Utils
+	url = https://github.com/Xwilarg/Discord-Utils.git

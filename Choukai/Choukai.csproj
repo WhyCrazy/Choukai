@@ -139,6 +139,7 @@
     <Compile Include="Db.cs" />
     <Compile Include="Modules\GameJam.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Discord-Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

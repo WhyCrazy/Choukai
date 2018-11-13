@@ -18,8 +18,13 @@ namespace Choukai
         private ITextChannel submitChannel;
         private Db db;
 
+        public DateTime StartTime { private set; get; }
+
+        public static Program P { private set; get; }
+
         private Program()
         {
+            P = this;
             client = new DiscordSocketClient(new DiscordSocketConfig
             {
                 LogLevel = LogSeverity.Verbose,
@@ -41,6 +46,7 @@ namespace Choukai
             await commands.AddModuleAsync<Modules.Communication>();
 
             await client.LoginAsync(TokenType.Bot, File.ReadAllText("Keys/token.txt"));
+            StartTime = DateTime.Now;
             await client.StartAsync();
 
             await Task.Delay(-1);
